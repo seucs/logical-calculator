@@ -188,21 +188,27 @@ bool Check(string a, string b)
 string BeautifulExpression(string res, string a)
 {
     string str = "";
+    string overline1 = "<span style=\"text-decoration: overline\">";
+    string overline2 = "</span>";
     for (int i = a.size() - 1; i >= 0; i--)
     {
+        if (str != "" && a[i] <= '1')
+        {
+             str += "&middot;";
+        }
         if (a[i] == '0')
         {
-            str += "^" + res + "<" + (char)('0' + a.size() - i - 1) + ">";
+            str += overline1 + res + "&lt;" + (char)('0' + a.size() - i - 1) + "&gt;" +overline2;
         }
         if (a[i] == '1')
         {
-            str += res + "<" + (char)('0' + a.size() - i - 1) + ">";
+            str += res + "&lt;" + (char)('0' + a.size() - i - 1) + "&gt;";
         }
     }
     return str;
 }
 
-QM::QM()
+QM::QM(QString path)
 {
 
     excel = new QAxObject("Excel.Application");
@@ -218,7 +224,7 @@ QM::QM()
     excel->setProperty("Visible",false);
 
     workbooks = excel->querySubObject("WorkBooks");
-    workbook = workbooks->querySubObject("Open (const QString&)",QString("d:/test.xlsx"));
+    workbook = workbooks->querySubObject("Open (const QString&)",path);
     worksheets = workbook->querySubObject("Sheets");
     worksheet = worksheets->querySubObject("Item(int)",1);//获取第一个工作表
 
@@ -495,7 +501,7 @@ QString QM::calLogical(string encode_name,string *decode_name,int num,int width)
                 str += BeautifulExpression(encode_name, itr->exp) + " + ";
             }
             str = str.substr(0, str.size() - 3);
-            result += decode_name[T] + " = " + str+"\n";
+            result += decode_name[T] + " = " + str+"<br>";
         }
         else
         {
@@ -559,7 +565,7 @@ QString QM::readExcel(int index)
                     {
                         if(strVal.size()>1)
                         {
-                            decode_name[k] = real_name[j] + "<"+QString::number(width-k-1).toStdString() +">";
+                            decode_name[k] = real_name[j] + "&lt;"+QString::number(width-k-1).toStdString() +"&gt;";
                         }
                         else
                         {

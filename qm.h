@@ -14,7 +14,7 @@ using namespace std;
 class QM
 {
 public:
-    QM();
+    QM(QString path);
     ~QM();
     QString calLogical(string encode_name,string *decode_name,int num,int width);
     QString readExcel(int index);

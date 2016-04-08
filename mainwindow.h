@@ -3,6 +3,12 @@
 
 #include <QMainWindow>
 #include <QMessageBox>
+#include <QMimeData>
+#include <QDebug>
+#include <QDragEnterEvent>
+//#include <QList>
+//#include <QUrl>
+#include <QDropEvent>
 #include <iconhelper.h>
 #include <qm.h>
 
@@ -19,6 +25,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void initStyle();
+protected:
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);
 
 private:
     Ui::MainWindow *ui;
@@ -33,29 +42,10 @@ signals:
 
 public slots:
     void cal();
-    void reloadExcel();
+    void reloadExcel(QString path);
     void showAbout();
     void ChangeToLogicalStatus();
     void ChangeToCoderStatus();
-
-protected:
-//    bool eventFilter(QObject *obj, QEvent *event);
-//    void mouseMoveEvent(QMouseEvent *e);
-//    void mousePressEvent(QMouseEvent *e);
-//    void mouseReleaseEvent(QMouseEvent *);
-
-private slots:
-//    void on_btnMenu_Close_clicked();
-
-//    void on_btnMenu_Max_clicked();
-
-//    void on_btnMenu_Min_clicked();
-
-//    void on_pushButton_clicked();
-
-//    void on_pushButton_2_clicked();
-
-//    void on_pushButton_3_clicked();
 
 };
 
